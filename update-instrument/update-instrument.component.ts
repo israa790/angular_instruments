@@ -18,12 +18,18 @@ export class UpdateInstrumentComponent implements OnInit {
     private instrumentService: InstrumentService) { }
 
   ngOnInit(): void {
+    // console.log(this.activatedRoute.snapshot.params.id);
+//this.currentInstrument = this.instrumentService.consulterInstrument(this.activatedRoute.snapshot.params.id);
+ console.log(this.currentInstrument);
+ this.instrumentService.consulterInstrument(this.activatedRoute.snapshot.params.id).subscribe( prod =>{ this.currentInstrument = prod; } ) ;
+
   }
 
-  updateInstrument()
-{ //console.log(this.currentInstrument);
-this.instrumentService.updateInstrument(this.currentInstrument);
-this.router.navigate(['instruments']);
-}
+  updateInstrument() {
+    this.instrumentService.updateInstrument(this.currentInstrument).subscribe(() => {
+    this.router.navigate(['instruments']);
+    },(error) => { alert("Problème lors de la modification !"); }
+    );
+    }
 
 }
